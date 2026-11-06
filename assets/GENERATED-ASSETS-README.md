@@ -1,0 +1,1 @@
+The following icons and decorative crops were prepared from the user's approved concept B image generated in this conversation. No third-party fonts or photo libraries are bundled. Decorative assets may be replaced with the school's own licensed branding before publication.

@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "مدرسه‌یار | اولیا",
+    "slug": "madreseyar-parent",
+    "version": "1.2.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "scheme": "madreseyarparent",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#09234a"
+    },
+    "android": {
+      "package": "ir.madreseyar.parent",
+      "versionCode": 3,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#09234a"
+      },
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ]
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "ir.madreseyar.parent",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "برای ورود امن به پنل اولیا از احراز هویت بیومتریک دستگاه استفاده می‌شود."
+      }
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-local-authentication"
+    ],
+    "extra": {
+      "privacy": "No analytics or trackers"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {normalizeBase,guardianUrl,ensureAuthorizedStudent,publishedReport,homeworkPending,portalScript,escapeHTML,GUARDIAN_VIEWS,englishDigits,allowedStudentPhoto} from '../src/logic.mjs';
+import {termReportHtml} from '../src/printing.mjs';
+test('normalization removes guardian and keeps subpath',()=>{assert.equal(normalizeBase('https://school.example.com/app/guardian/'),'https://school.example.com/app');assert.equal(guardianUrl('school.example.com'),'https://school.example.com/guardian/');});
+test('reject insecure public http and embedded credentials',()=>{assert.throws(()=>normalizeBase('http://school.example.com'));assert.throws(()=>normalizeBase('https://u:p@school.example.com'));});
+test('linked student selection ignores alien ids',()=>{const d={children:[{student:{id:'42'}},{student:{id:'99'}}]};assert.equal(ensureAuthorizedStudent(d,'OTHER').student.id,'42');});
+test('grade visibility and counts',()=>{const ch={termReports:{semester2:{reportCardStatus:'draft'},semester1:{reportCardStatus:'published',average:19}},homework:[{id:'1'},{id:'2'}],homeworkSubmissions:[{homeworkId:'1'}]};assert.equal(publishedReport(ch).average,19);assert.equal(homeworkPending(ch),1);});
+test('webview injects all actual views, never interpolates unsafe target',()=>{for(const v of GUARDIAN_VIEWS)assert.match(portalScript({token:'abc',studentId:'1',view:v}),/guardian\.token/);assert.throws(()=>portalScript({token:'x',view:'admin'}));});
+test('printing escapes special characters and refuses drafts',()=>{const ch={student:{firstName:'<X>'},termReports:{semester1:{reportCardStatus:'published',average:18,subjects:[{subject:'<img onerror=alert(1)>',finalScore:18}]},semester2:{reportCardStatus:'draft'}}};const h=termReportHtml(ch,'semester1');assert.match(h,/&lt;img/);assert.doesNotMatch(h,/<img onerror/);assert.throws(()=>termReportHtml(ch,'semester2'));});
+test('escaping dangerous string',()=>assert.equal(escapeHTML('<a&"'), '&lt;a&amp;&quot;'));
+test('Persian and Arabic-Indic numbers work in national code field',()=>assert.equal(englishDigits('۱۲۳٤٥٦۷۸۹۰'),'1234567890'));
+test('Student photo data can only be safe bounded inline images',()=>{assert.equal(allowedStudentPhoto('javascript:alert(1)'),null);assert.equal(allowedStudentPhoto('data:image/jpeg;base64,QUJD'),'data:image/jpeg;base64,QUJD');});
