@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.2.1",
   "design": "approved-B-exact-reference",
   "web_ui_reference": "STAGE48_SOURCE_72_82_0.zip",
   "server_api_reference": "current Project server source; live host validation pending",
@@ -19,9 +19,14 @@
   ],
   "automated_tests": 24,
   "jsx_parser": "typescript transpileModule - passed",
-  "npm_install": "timed out in this environment",
+  "npm_install": "not run to completion in this environment; GitHub Actions performs install",
   "apk_built": false,
   "handset_biometric_tested": false,
   "live_host_tested": false,
-  "state": "source package ready for review; APK and live deployment validation pending"
+  "state": "source dependency fix applied; GitHub Actions build and device validation pending",
+  "dependency_fixes": {
+    "@types/react": "~19.3.0",
+    "typescript": "~6.0.3"
+  },
+  "android_version_code": 4
 }

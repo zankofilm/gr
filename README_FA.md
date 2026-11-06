@@ -1,6 +1,6 @@
 # مدرسه‌یار — اپلیکیشن اولیا | طرح B رسمی سازمانی
 
-**نسخه سورس: 1.2.0** · Android / React Native / Expo SDK 58 · RTL · تم سرمه‌ای، سفید و طلایی
+**نسخه سورس: 1.2.1** · Android / React Native / Expo SDK 58 · RTL · تم سرمه‌ای، سفید و طلایی
 
 این بسته سورس کامل پروژه است؛ **APK آماده نصب نیست**. طراحی مرجع `design/approved-B-reference.png` است و تغییر تم یا چیدمان از طرح B انجام نشده است.
 
@@ -48,19 +48,18 @@
 - مسیرهای API جدیدتر از سورس سرور موجود در پروژه بررسی شده‌اند؛ پیش از انتشار عملیاتی باید نسخه واقعی هاست مدرسه نیز با همین قراردادها تطبیق داده شود.
 - برنامه به دیتابیس یا فایل‌های هاست دسترسی مستقیم ندارد و فقط از API استفاده می‌کند.
 
-## ساخت APK آزمایشی
+## ساخت APK آزمایشی با GitHub Actions
 
-پیش‌نیاز: Node.js 22، npm، اینترنت برای دریافت پکیج‌ها و حساب Expo/EAS. در PowerShell ویندوز:
+این سورس دارای Workflow آماده است و APK را روی سرورهای GitHub می‌سازد؛ لازم نیست روی رایانه خودت Android Studio یا Java نصب کنی.
 
-```powershell
-cd "C:\path\to\madreseyar-parent-mobile-B-v1.2.0"
-npm install
-npm run verify
-npx eas-cli@latest login
-npx eas-cli@latest build --platform android --profile preview
-```
+1. تمام محتویات ZIP را از حالت فشرده خارج کن.
+2. یک مخزن **Private** در GitHub بساز و همه فایل‌ها و پوشه‌ها، از جمله `.github`، را در ریشه مخزن بارگذاری کن.
+3. تغییرات را روی شاخه `main` ثبت کن.
+4. از زبانه **Actions**، گردش کار **Build Android APK** را باز کن و **Run workflow** را بزن.
+5. پس از سبز شدن اجرای Workflow، وارد همان اجرا شو و Artifact با نام `madreseyar-parent-v1.2.1-debug-apk` را دانلود کن.
+6. فایل Artifact را از حالت ZIP خارج کن و `app-debug.apk` را روی گوشی نصب کن.
 
-پروفایل `preview` در `eas.json` خروجی APK می‌سازد. نسخه `versionCode` اندروید به ۳ افزایش یافته است.
+این خروجی Debug APK برای نصب و آزمایش است، نه انتشار نهایی در فروشگاه. `versionCode` اندروید در این نسخه ۴ است. جزئیات تصویری در `GITHUB_APK_BUILD_FA.md` آمده است.
 
 ### اتصال به سرور
 
@@ -71,6 +70,10 @@ EXPO_PUBLIC_PARENT_PORTAL_URL=https://YOUR-SCHOOL-DOMAIN.example
 ```
 
 SSL معتبر و دسترسی موبایل به API الزامی است. از اطلاعات واقعی دانش‌آموز در گزارش خطا یا مخزن عمومی استفاده نکنید.
+
+## اصلاح ساخت نسخه ۱.۲.۱
+
+خطای مرحله `expo install --check` که به علت قدیمی بودن `@types/react` و `typescript` رخ می‌داد اصلاح شده است. نسخه‌های فعلی به‌ترتیب `~19.3.0` و `~6.0.3` هستند. برای ساخت APK از GitHub Actions استفاده کنید؛ موفقیت ساخت فقط پس از سبز شدن Workflow و مشاهده Artifact تأیید می‌شود.
 
 ## نتیجه آزمون این نسخه
 

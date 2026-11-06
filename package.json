@@ -1,6 +1,6 @@
 {
   "name": "madreseyar-parent-mobile",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "react-native-webview": "14.0.1"
   },
   "devDependencies": {
-    "@types/react": "~19.2.0",
-    "typescript": "~5.9.0"
+    "@types/react": "~19.3.0",
+    "typescript": "~6.0.3"
   }
 }

@@ -1,6 +1,6 @@
 # مدرسه‌یار | اپلیکیشن اولیا — طرح B
 
-سورس نسخه 1.2.0 برای Android / React Native / Expo.
+سورس نسخه 1.2.1 برای Android / React Native / Expo.
 
 ## ساخت APK مستقیماً در GitHub
 
@@ -12,7 +12,7 @@
 3. به زبانه **Actions** بروید.
 4. Workflow با نام **Build Android APK** را انتخاب کنید.
 5. روی **Run workflow** بزنید و شاخه `main` را انتخاب کنید.
-6. پس از پایان موفق، وارد اجرای همان Workflow شوید و در بخش **Artifacts** فایل `madreseyar-parent-v1.2.0-debug-apk` را دانلود کنید.
+6. پس از پایان موفق، وارد اجرای همان Workflow شوید و در بخش **Artifacts** فایل `madreseyar-parent-v1.2.1-debug-apk` را دانلود کنید.
 7. ZIP دانلودشده از Artifacts را باز کنید؛ فایل `app-debug.apk` داخل آن است.
 
 ### نوع خروجی
