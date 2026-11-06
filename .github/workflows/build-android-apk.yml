@@ -1,0 +1,78 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build-apk:
+    name: Build standalone Android APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install JavaScript dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Validate Expo dependency versions
+        run: npx expo install --check
+
+      - name: Run project checks
+        run: npm run verify
+
+      - name: Generate Android project
+        run: npx expo prebuild --platform android --non-interactive --no-install
+
+      - name: Configure standalone JavaScript bundle
+        run: node scripts/enable-standalone-debug-bundle.cjs
+
+      - name: Build installable debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Verify JavaScript bundle is inside APK
+        run: |
+          python - <<'PY'
+          from zipfile import ZipFile
+          from pathlib import Path
+          apk = Path('android/app/build/outputs/apk/debug/app-debug.apk')
+          if not apk.is_file():
+              raise SystemExit(f'APK not found: {apk}')
+          with ZipFile(apk) as archive:
+              matches = [name for name in archive.namelist() if name == 'assets/index.android.bundle']
+              if not matches:
+                  raise SystemExit('FAIL: assets/index.android.bundle is missing. This APK would require Metro.')
+              info = archive.getinfo(matches[0])
+              if info.file_size < 1024:
+                  raise SystemExit(f'FAIL: JS bundle is unexpectedly small ({info.file_size} bytes).')
+              print(f'PASS: {matches[0]} is packaged ({info.file_size:,} bytes).')
+          PY
+
+      - name: Upload standalone APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: madreseyar-parent-v1.2.2-standalone-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
