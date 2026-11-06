@@ -1,5 +1,5 @@
 {
-  "version": "1.2.2",
+  "version": "1.2.3",
   "design": "approved-B-exact-reference",
   "web_ui_reference": "STAGE48_SOURCE_72_82_0.zip",
   "server_api_reference": "current Project server source; live host validation pending",
@@ -17,22 +17,22 @@
     "fingerprint sensor availability check and secure login",
     "full nine-view web portal fallback"
   ],
-  "automated_tests": 25,
+  "automated_tests": 26,
   "jsx_parser": "typescript transpileModule - passed",
   "npm_install": "not run to completion in this environment; GitHub Actions performs install",
   "apk_built": false,
   "handset_biometric_tested": false,
   "live_host_tested": false,
-  "state": "standalone JS bundle configuration added; GitHub Actions and handset validation pending",
+  "state": "release APK workflow configured; GitHub build and handset validation pending",
   "dependency_fixes": {
     "@types/react": "~19.3.0",
     "typescript": "~6.0.3"
   },
-  "android_version_code": 5,
-  "apk_bundle_verification": "Workflow checks assets/index.android.bundle exists and is >1KB before artifact upload",
+  "android_version_code": 6,
+  "apk_bundle_verification": "Workflow inspects release APK and requires assets/index.android.bundle to exist and exceed 1KB before artifact upload",
   "build_fix": {
-    "root_cause": "React Native debug variant was treated as Metro-dependent; JS bundle was omitted from APK",
-    "gradle_setting": "debuggableVariants = []",
-    "verification": "Inspect APK ZIP for assets/index.android.bundle"
+    "root_cause": "The v1.2.2 post-prebuild Gradle mutation script did not safely handle an existing debuggableVariants setting and failed before Gradle build.",
+    "resolution": "Build the Android release variant instead; React Native embeds the JavaScript bundle in release builds without Metro.",
+    "verification": "Inspect android/app/build/outputs/apk/release/app-release.apk for assets/index.android.bundle"
   }
 }

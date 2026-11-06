@@ -1,10 +1,17 @@
 # تغییرات نسخه‌ها
 
+## 1.2.3
+- حذف اسکریپت شکننده‌ای که پس از Expo Prebuild سعی می‌کرد `debuggableVariants` را با الگوی متنی تغییر دهد؛ اجرای GitHub Actions در نسخه ۱.۲.۲ دقیقاً در همین مرحله متوقف می‌شد.
+- تغییر ساخت به variant استاندارد `release` با دستور `:app:assembleRelease`؛ در خروجی Release، React Native فایل JavaScript را داخل APK قرار می‌دهد و به Metro نیاز ندارد.
+- بررسی مستقیم `assets/index.android.bundle` در فایل `app-release.apk` پیش از بارگذاری Artifact؛ APK ناقص منتشر نمی‌شود.
+- افزایش Android `versionCode` از ۵ به ۶ برای نصب نسخه جدید روی نسخه قبلی.
+- نام Artifact: `madreseyar-parent-v1.2.3-release-apk`.
+
 ## 1.2.2
-- رفع علت خطای `Unable to load script` در APK نصب‌شده: تنظیم React Native برای بسته‌بندی JavaScript در Debug APK و حذف وابستگی به Metro.
-- افزودن بررسی داخل GitHub Actions برای اطمینان از وجود `assets/index.android.bundle` در APK و جلوگیری از انتشار Artifact ناقص.
-- افزایش Android `versionCode` از ۴ به ۵ برای نصب نسخه جدید روی نسخه قبلی.
-- نام Artifact: `madreseyar-parent-v1.2.2-standalone-debug-apk`.
+- تلاش برای مستقل‌سازی Debug APK با افزودن تنظیم `debuggableVariants = []` و بررسی وجود bundle در APK.
+- لاگ واقعی GitHub نشان داد اسکریپت تغییر Gradle پیش از اجرای Gradle شکست می‌خورد؛ بنابراین این نسخه APK نهایی تولید نکرد.
+- ۲۵ آزمون خودکار و بررسی JSX موفق بودند، اما این نتیجه به معنی ساخته‌شدن APK نبود.
+- افزایش Android `versionCode` از ۴ به ۵.
 
 ## 1.2.1
 - رفع ناسازگاری بررسی Expo با ارتقای `@types/react` به `~19.3.0` و `typescript` به `~6.0.3` مطابق نسخه‌های مورد انتظار SDK 58.

@@ -1,9 +1,15 @@
-# وضعیت ساخت نسخه ۱.۲.۲
+# وضعیت ساخت نسخه ۱.۲.۳
 
-- علت خطای گزارش‌شده روی گوشی شناسایی شد: Workflow نسخه Debug را بدون بسته‌بندی JS در APK می‌ساخت؛ در نتیجه React Native برای اجرای اپ به Metro نیاز داشت.
-- اسکریپت `scripts/enable-standalone-debug-bundle.cjs` پس از Expo Prebuild مقدار `debuggableVariants = []` را به تنظیمات React Native اضافه می‌کند.
-- Workflow پس از ساخت APK، وجود `assets/index.android.bundle` و اندازه آن را داخل APK بررسی می‌کند؛ در صورت نبود فایل، انتشار Artifact متوقف می‌شود.
-- نسخه برنامه ۱.۲.۲ و Android `versionCode` برابر ۵ است تا نسخه جدید روی نسخه ۱.۲.۱ نصب شود.
-- ۲۵ آزمون خودکار Node.js و بررسی JSX در این محیط موفق شدند؛ ساخت واقعی APK و بررسی bundle نهایی در GitHub Actions انجام می‌شود.
+## یافته از لاگ واقعی GitHub نسخه ۱.۲.۲
+- بررسی Expo dependency و هر ۲۵ آزمون خودکار موفق بودند.
+- `expo prebuild` پوشه Android را با موفقیت تولید کرد.
+- Workflow پیش از اجرای Gradle، در اسکریپت `enable-standalone-debug-bundle.cjs` متوقف شد؛ بنابراین APK نسخه ۱.۲.۲ ساخته نشد.
+- اسکریپت قبلی به‌جای استفاده از variant استاندارد Release، تلاش می‌کرد `debuggableVariants` را با تطبیق متنی تغییر دهد. این روش در برابر ساختار Gradle تولیدشده توسط Expo پایدار نبود.
 
-**وضعیت:** اصلاح Workflow و سورس انجام شده؛ APK نسخه ۱.۲.۲ تا اجرای موفق GitHub Actions و نصب/اجرای موفق روی گوشی تأیید نهایی نشده است.
+## اصلاح نسخه ۱.۲.۳
+- مرحله تغییر دستی Gradle حذف شد.
+- Workflow اکنون `:app:assembleRelease` را اجرا می‌کند؛ در variant انتشار، React Native bundle جاوااسکریپت را داخل APK می‌سازد و برای اجرای اپ به Metro وابسته نیست.
+- پس از Build، Workflow وجود `assets/index.android.bundle` و اندازه بیش از ۱ کیلوبایت را داخل `app-release.apk` بررسی می‌کند.
+- Android `versionCode` برابر ۶ است و شناسه بسته بدون تغییر مانده است.
+
+**وضعیت:** سورس و Workflow اصلاح شده‌اند. APK واقعی هنوز تا اجرای موفق GitHub Actions ساخته و تأیید نشده است. نصب، اجرای اولیه، ورود و اتصال به هاست باید روی گوشی واقعی بررسی شوند.
