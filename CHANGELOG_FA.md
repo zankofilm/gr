@@ -1,5 +1,11 @@
 # تغییرات نسخه‌ها
 
+## 1.2.2
+- رفع علت خطای `Unable to load script` در APK نصب‌شده: تنظیم React Native برای بسته‌بندی JavaScript در Debug APK و حذف وابستگی به Metro.
+- افزودن بررسی داخل GitHub Actions برای اطمینان از وجود `assets/index.android.bundle` در APK و جلوگیری از انتشار Artifact ناقص.
+- افزایش Android `versionCode` از ۴ به ۵ برای نصب نسخه جدید روی نسخه قبلی.
+- نام Artifact: `madreseyar-parent-v1.2.2-standalone-debug-apk`.
+
 ## 1.2.1
 - رفع ناسازگاری بررسی Expo با ارتقای `@types/react` به `~19.3.0` و `typescript` به `~6.0.3` مطابق نسخه‌های مورد انتظار SDK 58.
 - افزایش Android `versionCode` از ۳ به ۴ برای نصب نسخه اصلاح‌شده روی نسخه قبلی.

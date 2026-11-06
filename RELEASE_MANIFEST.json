@@ -1,5 +1,5 @@
 {
-  "version": "1.2.1",
+  "version": "1.2.2",
   "design": "approved-B-exact-reference",
   "web_ui_reference": "STAGE48_SOURCE_72_82_0.zip",
   "server_api_reference": "current Project server source; live host validation pending",
@@ -17,16 +17,22 @@
     "fingerprint sensor availability check and secure login",
     "full nine-view web portal fallback"
   ],
-  "automated_tests": 24,
+  "automated_tests": 25,
   "jsx_parser": "typescript transpileModule - passed",
   "npm_install": "not run to completion in this environment; GitHub Actions performs install",
   "apk_built": false,
   "handset_biometric_tested": false,
   "live_host_tested": false,
-  "state": "source dependency fix applied; GitHub Actions build and device validation pending",
+  "state": "standalone JS bundle configuration added; GitHub Actions and handset validation pending",
   "dependency_fixes": {
     "@types/react": "~19.3.0",
     "typescript": "~6.0.3"
   },
-  "android_version_code": 4
+  "android_version_code": 5,
+  "apk_bundle_verification": "Workflow checks assets/index.android.bundle exists and is >1KB before artifact upload",
+  "build_fix": {
+    "root_cause": "React Native debug variant was treated as Metro-dependent; JS bundle was omitted from APK",
+    "gradle_setting": "debuggableVariants = []",
+    "verification": "Inspect APK ZIP for assets/index.android.bundle"
+  }
 }

@@ -34,3 +34,10 @@
 - `typescript`: `~6.0.3`
 
 نسخه برنامه ۱.۲.۱ و Android `versionCode` برابر ۴ است. پس از بارگذاری این سورس در شاخه `main`، Workflow را دوباره اجرا کنید.
+
+
+## رفع خطای Unable to load script (نسخه ۱.۲.۲)
+
+این خطا زمانی رخ می‌دهد که APK بدون فایل JavaScript ساخته شود و React Native برای بارگذاری برنامه به Metro روی رایانه نیاز پیدا کند. Workflow جدید بعد از Prebuild تنظیم `debuggableVariants = []` را در `android/app/build.gradle` اعمال می‌کند؛ سپس APK را می‌سازد و وجود `assets/index.android.bundle` را داخل فایل APK کنترل می‌کند. اگر bundle موجود نباشد، Workflow قرمز می‌شود و APK ناقص را به‌عنوان Artifact تحویل نمی‌دهد.
+
+Artifact جدید: `madreseyar-parent-v1.2.2-standalone-debug-apk`
